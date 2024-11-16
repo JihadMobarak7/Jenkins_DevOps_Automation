@@ -32,6 +32,15 @@ pipeline {
                 }
             }
         }
+        stage('Coverage') {
+            steps {
+                script {
+                    sh "source ${VIRTUAL_ENV}/bin/activate && coverage run -m pytest"
+                    sh "source ${VIRTUAL_ENV}/bin/activate && coverage report"
+                    sh "source ${VIRTUAL_ENV}/bin/activate && coverage html"
+                }
+            }
+        }
 
         stage('Deploy') {
             steps {
