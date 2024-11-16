@@ -62,8 +62,7 @@ pipeline {
         stage('Deploy') {
             steps {
                 script {
-                    // Deployment logic, e.g., pushing to a remote server
-                    echo "Deploying application..."
+                    sh "./deploy.sh"
                 }
             }
         }
