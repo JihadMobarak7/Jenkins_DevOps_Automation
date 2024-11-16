@@ -2,15 +2,15 @@ pipeline {
     agent any
 
     environment {
-        PYTHONPATH = "${env.WORKSPACE}"
+        VIRTUAL_ENV = "${WORKSPACE}/venv"
     }
 
     stages {
         stage('Setup') {
             steps {
                 script {
-                    if (!fileExists("${env.WORKSPACE}/${VIRTUAL_ENV}")) {
-                        sh "python3 -m venv venv"
+                    if (!fileExists("${VIRTUAL_ENV}")) {
+                        sh "python3 -m venv ${VIRTUAL_ENV}"
                     }
                     sh "source ${VIRTUAL_ENV}/bin/activate && pip install -r requirements.txt"
                 }
