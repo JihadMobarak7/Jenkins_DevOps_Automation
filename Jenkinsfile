@@ -42,11 +42,19 @@ pipeline {
                 }
             }
         }
-        
+
         stage('Security Scan') {
             steps {
                 script {
-                    sh "source ${VIRTUAL_ENV}/bin/activate && bandit -r ."
+                    sh """
+                    source ${VIRTUAL_ENV}/bin/activate &&
+                    bandit -r . -f html -o bandit-report.html || true
+                    """
+                }
+            }
+            post {
+                always {
+                    archiveArtifacts artifacts: 'bandit-report.html', allowEmptyArchive: true
                 }
             }
         }
